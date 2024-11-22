@@ -99,7 +99,7 @@ resource "aws_eip" "nat" {
   domain   = "vpc"
 
   tags = merge(
-    { Name = "nat-${local.subnet_names["public"]}-${each.key}" },
+    { Name = "${local.subnet_names["public"]}-${each.key}-nat" },
     module.tags.tags_aws,
     try(module.subnet_tags["public"].tags_aws, {})
   )
@@ -113,7 +113,7 @@ resource "aws_nat_gateway" "main" {
   subnet_id     = aws_subnet.public[each.key].id
 
   tags = merge(
-    { Name = "nat-${local.subnet_names["public"]}-${each.key}" },
+    { Name = "${local.subnet_names["public"]}-${each.key}-nat" },
     module.tags.tags_aws,
     try(module.subnet_tags["public"].tags_aws, {})
   )
